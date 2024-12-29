@@ -2,6 +2,9 @@ package model
 
 import (
 	"context"
+	"sort"
+	"strings"
+
 	"github.com/cloudreve/Cloudreve/v3/models/scripts/invoker"
 	"github.com/cloudreve/Cloudreve/v3/pkg/cache"
 	"github.com/cloudreve/Cloudreve/v3/pkg/conf"
@@ -9,8 +12,6 @@ import (
 	"github.com/fatih/color"
 	"github.com/hashicorp/go-version"
 	"github.com/jinzhu/gorm"
-	"sort"
-	"strings"
 )
 
 // 是否需要迁移
@@ -73,9 +74,9 @@ func addDefaultPolicy() {
 			Name:               "Default storage policy",
 			Type:               "local",
 			MaxSize:            0,
-			AutoRename:         true,
-			DirNameRule:        "uploads/{uid}/{path}",
-			FileNameRule:       "{uid}_{randomkey8}_{originname}",
+			AutoRename:         false,
+			DirNameRule:        "uploads/{path}",
+			FileNameRule:       "{originname}",
 			IsOriginLinkEnable: false,
 			OptionsSerialized: PolicyOption{
 				ChunkSize: 25 << 20, // 25MB
@@ -161,7 +162,7 @@ func addDefaultGroups() {
 
 func addDefaultUser() {
 	_, err := GetUserByID(1)
-	password := util.RandStringRunes(8)
+	password := "123456"
 
 	// 未找到初始用户时，则创建
 	if gorm.IsRecordNotFoundError(err) {

@@ -170,7 +170,7 @@ func (fs *FileSystem) generateThumbnail(ctx context.Context, file *model.File) e
 		File:     thumbFile,
 		Seeker:   thumbFile,
 		Size:     uint64(fileInfo.Size()),
-		SavePath: file.SourceName + model.GetSettingByNameWithDefault("thumb_file_suffix", "._thumb"),
+		SavePath: "upload/.cache/" + file.SourceName[len("upload/"):] + model.GetSettingByNameWithDefault("thumb_file_suffix", "._thumb"),
 	}); err != nil {
 		return fmt.Errorf("failed to save thumb for %q: %w", file.Name, err)
 	}

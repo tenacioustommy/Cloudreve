@@ -2,6 +2,7 @@ package util
 
 import (
 	"math/rand"
+	"mime"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -121,4 +122,18 @@ func SliceDifference(slice1, slice2 []string) []string {
 		}
 	}
 	return nn
+}
+
+// GetMimeType 获取文件的MIME类型
+func GetMimeType(path string) string {
+	ext := filepath.Ext(path)
+	if ext == "" {
+		return "application/octet-stream"
+	}
+	mimeType := mime.TypeByExtension(ext)
+	if mimeType == "" {
+		// 如果根据扩展名未找到MIME类型，返回默认值
+		return "application/octet-stream"
+	}
+	return mimeType
 }

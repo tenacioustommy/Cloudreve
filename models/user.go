@@ -126,6 +126,13 @@ func (user *User) GetPolicyID(prefer uint) uint {
 	return 0
 }
 
+// GetAllUsers 获取所有用户
+func GetAllUsers() ([]User, error) {
+	var users []User
+	result := DB.Set("gorm:auto_preload", true).Find(&users)
+	return users, result.Error
+}
+
 // GetUserByID 用ID获取用户
 func GetUserByID(ID interface{}) (User, error) {
 	var user User
@@ -198,7 +205,7 @@ func (user *User) AfterFind() (err error) {
 	return err
 }
 
-//SerializeOptions 将序列后的Option写入到数据库字段
+// SerializeOptions 将序列后的Option写入到数据库字段
 func (user *User) SerializeOptions() (err error) {
 	optionsValue, err := json.Marshal(&user.OptionsSerialized)
 	user.Options = string(optionsValue)

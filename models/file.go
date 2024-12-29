@@ -181,6 +181,18 @@ func GetChildFilesOfFolders(folders *[]Folder) ([]File, error) {
 	return files, result.Error
 }
 
+func GetFilesByUserID(uid uint) ([]File, error) {
+	var files []File
+	result := DB.Where("user_id = ?", uid).Find(&files)
+	return files, result.Error
+}
+
+func GetFoldersByUserID(uid uint) ([]Folder, error) {
+	var folders []Folder
+	result := DB.Where("user_id = ?", uid).Find(&folders)
+	return folders, result.Error
+}
+
 // GetUploadPlaceholderFiles 获取所有上传占位文件
 // UID为0表示忽略用户
 func GetUploadPlaceholderFiles(uid uint) []*File {

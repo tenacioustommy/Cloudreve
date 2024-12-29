@@ -3,13 +3,14 @@ package model
 import (
 	"encoding/gob"
 	"encoding/json"
-	"github.com/gofrs/uuid"
-	"github.com/samber/lo"
 	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gofrs/uuid"
+	"github.com/samber/lo"
 
 	"github.com/cloudreve/Cloudreve/v3/pkg/cache"
 	"github.com/cloudreve/Cloudreve/v3/pkg/util"
